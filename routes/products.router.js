@@ -8,36 +8,62 @@ router.get('/', (req, res) => {
   const products = [];
   for (let index = 0; index < 100; index++) {
     products.push({
+      idProduct: faker.string.uuid(),
       name: faker.commerce.productName(),
       price: parseInt(faker.commerce.price(), 10),
-      image: faker.image.imageUrl()
+      image: faker.image.url()
     });
   }
   res.json(products);
 });
 
 
-router.get('/:id', (req, res) => {
-  const { id } = req.params;
+router.get('/:idProduct', (req, res) => {
+  const { idProduct } = req.params;
   res.json({
-    id,
+    idProduct,
     name: 'producto 1',
     price: '2000',
   });
 });
 
-// router.get('/', (req, res) => {
-//   const products = [];
-//   const { size } = req.query;
-//   const limit = size || 10;
-//   for (let index = 0; index < limit; index++) {
-//     products.push({
-//       name: faker.commerce.productName(),
-//       price: parseInt(faker.commerce.price(), 10),
-//       image: faker.image.imageUrl()
-//     });
-//   }
-//   res.json(products);
-// });
+
+router.post('/', (req, res) => {
+  const body = req.body;
+  res.json({
+    message: 'created',
+    data: body
+  });
+})
+
+
+// router.put('/:id', (req, res) => {
+//   const { id } = req.params;
+//   const body = req.body;
+//   res.json({
+//     message: 'update',
+//     data: body,
+//     id,
+//   });
+// })
+
+router.patch('/:idProduct', (req, res) => {
+  const { idProduct } = req.params;
+  const body = req.body;
+  res.json({
+    message: 'update',
+    data: body,
+    idProduct,
+  });
+})
+
+router.delete('/:idProduct', (req, res) => {
+  const { idProduct } = req.params;
+  res.json({
+    message: 'delete',
+    idProduct
+  });
+})
+
 
 module.exports = router;
